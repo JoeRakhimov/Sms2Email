@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Sms2Email</string>
+
+    <string name="senders_gmail_email">Sender\'s Gmail e-mail</string>
+    <string name="senders_gmail_password">Sender\'s Gmail password</string>
+    <string name="receivers_email_address">Receiver\'s E-mail address</string>
+    <string name="save">Save</string>
+    <string name="instruction">
+        Third party applications should be enabled in sender\'s Gmail account settings. Otherwise this application would not be able to send Email.
+    </string>
+
+    <string name="sms_permission_not_allowed">SMS permission not allowed</string>
+    <string name="sender_gmail_email_empty">Sender\'s Gmail e-mail address empty</string>
+    <string name="sender_gmail_email_invalid">Sender\'s Gmail e-mail address invalid</string>
+    <string name="sender_gmail_password_empty">Sender\'s Gmail password empty</string>
+    <string name="receiver_email_address_empty">Receiver\'s email address is empty</string>
+    <string name="receiver_email_address_invalid">Receiver\'s email address is invalid</string>
+    <string name="ready">Setup successful</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="setup">Setup</string>
+    <string name="settings">Settings</string>
+    <string name="gmail_settings">Gmail settings</string>
+    <string name="test_message_sent_successfully">Test message was sent successfully</string>
+    <string name="test">Test</string>
+
+</resources>
