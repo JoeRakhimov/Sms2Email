@@ -8,13 +8,13 @@ import com.ipakyulibank.mobile.util.permissions.MyPermissionChecker
 import com.ipakyulibank.mobile.util.permissions.MyPermissionListener
 import com.joerakhimov.sms2email.R
 import com.joerakhimov.sms2email.extensions.showToast
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
 import com.joerakhimov.sms2email.usecase.email.EmailUseCase
 
-class MainActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
     @Inject
     lateinit var prefs: Prefs
@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_settings)
+        setTitle(R.string.settings)
 
         initInputs()
         initGmailSettingsButton()

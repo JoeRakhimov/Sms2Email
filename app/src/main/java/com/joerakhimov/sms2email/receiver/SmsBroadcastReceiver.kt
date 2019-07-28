@@ -8,7 +8,7 @@ import com.ipakyulibank.mobile.data.preferences.Prefs
 import com.ipakyulibank.mobile.di.Injector
 import com.joerakhimov.sms2email.extensions.showToast
 import com.joerakhimov.sms2email.util.email.GMailSender
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 import android.os.Build
 import android.support.v4.app.NotificationCompat.getExtras
