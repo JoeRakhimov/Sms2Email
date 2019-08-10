@@ -7,8 +7,10 @@ import com.ipakyulibank.mobile.data.preferences.PrefsUtil
 import com.ipakyulibank.mobile.util.permissions.MyPermissionChecker
 import com.ipakyulibank.mobile.util.permissions.MyPermissionCheckerImpl
 import com.ipakyulibank.mobile.util.permissions.PermissionUtil
+import com.joerakhimov.sms2email.util.connection.ConnectionChecker
 import com.joerakhimov.sms2email.util.scheduler.SchedulerProvider
 import com.joerakhimov.sms2email.util.scheduler.SchedulerProviderImpl
+import com.joerakhimov.sms2email.util.worker.MyWorkManager
 import dagger.Module
 import dagger.Provides
 
@@ -29,5 +31,11 @@ class UtilModule() {
 
     @Provides
     fun provideSchedulerProvider(): SchedulerProvider = SchedulerProviderImpl()
+
+    @Provides
+    fun provideWorkerManager(): MyWorkManager = MyWorkManager()
+
+    @Provides
+    fun provideConnectionChecker(schedulerProvider: SchedulerProvider) = ConnectionChecker(schedulerProvider)
 
 }

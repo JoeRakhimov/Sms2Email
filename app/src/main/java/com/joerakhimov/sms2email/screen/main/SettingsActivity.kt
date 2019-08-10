@@ -13,6 +13,8 @@ import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
 import com.joerakhimov.sms2email.usecase.email.EmailUseCase
+import com.joerakhimov.sms2email.util.connection.ConnectionChecker
+import com.joerakhimov.sms2email.util.worker.MyWorkManager
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -24,6 +26,12 @@ class SettingsActivity : AppCompatActivity() {
 
     @Inject
     lateinit var emailUseCase: EmailUseCase
+
+    @Inject
+    lateinit var connectionChecker: ConnectionChecker
+
+    @Inject
+    lateinit var workManager: MyWorkManager
 
     init {
         Injector.appComponent.inject(this)
@@ -70,17 +78,27 @@ class SettingsActivity : AppCompatActivity() {
             val senderGmailPassword = inputSenderGmailPassword.text.toString()
             val receiverEmail = inputReceiverEmailAddress.text.toString()
 
-            emailUseCase.sendEmail(
-                senderGmailEmail,
-                senderGmailPassword,
-                receiverEmail,
-                "Test number",
-                "Test message")
+            val senderNumber = "Test number"
+            val messageBody = "Test message"
+
+            connectionChecker.getConnectionChecker()
                 .subscribe({
-                    showToast(R.string.test_message_sent_successfully)
-                }, { e ->
-                    showToast(e.message)
-                })
+                    if(it){
+                        emailUseCase.sendEmail(
+                            senderGmailEmail,
+                            senderGmailPassword,
+                            receiverEmail,
+                            "Test number",
+                            "Test message")
+                            .subscribe({
+                                showToast(R.string.test_message_sent_successfully)
+                            }, { e ->
+                                showToast(e.message)
+                            })
+                    } else {
+                        workManager.scheduleSendingEmail(senderNumber, messageBody)
+                    }
+                },{})
 
         }
     }

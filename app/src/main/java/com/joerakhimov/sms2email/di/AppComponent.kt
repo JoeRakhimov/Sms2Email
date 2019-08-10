@@ -5,6 +5,7 @@ import com.ipakyulibank.mobile.di.module.UseCaseModule
 import com.ipakyulibank.mobile.di.module.UtilModule
 import com.joerakhimov.sms2email.receiver.SmsBroadcastReceiver
 import com.joerakhimov.sms2email.screen.main.SettingsActivity
+import com.joerakhimov.sms2email.work.EmailSendingWork
 import dagger.Component
 import javax.inject.Singleton
 
@@ -13,4 +14,5 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(activity: SettingsActivity)
     fun inject(receiver: SmsBroadcastReceiver)
+    fun inject(worker: EmailSendingWork)
 }

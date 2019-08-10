@@ -14,8 +14,11 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat.getExtras
 import android.os.Bundle
 import android.telephony.SmsMessage
+import com.joerakhimov.sms2email.R
 import com.joerakhimov.sms2email.usecase.email.EmailUseCase
+import com.joerakhimov.sms2email.util.connection.ConnectionChecker
 import com.joerakhimov.sms2email.util.scheduler.SchedulerProvider
+import com.joerakhimov.sms2email.util.worker.MyWorkManager
 import io.reactivex.Single
 
 
@@ -26,6 +29,12 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var emailUseCase: EmailUseCase
+
+    @Inject
+    lateinit var workManager: MyWorkManager
+
+    @Inject
+    lateinit var connectionChecker: ConnectionChecker
 
     init {
         Injector.appComponent.inject(this)
@@ -65,13 +74,19 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
         if(senderGmailPassword.isNullOrEmpty()) return
         if(receiverEmail.isNullOrEmpty()) return
 
-        emailUseCase.sendEmail(senderGmailEmail, senderGmailPassword, receiverEmail, senderNumber, messageBody)
+        connectionChecker.getConnectionChecker()
             .subscribe({
-                context.showToast("Message from $senderNumber was sent to $receiverEmail")
-            }, { e ->
-                context.showToast(e.message)
-            })
-
+                if(it){
+                    emailUseCase.sendEmail(senderGmailEmail, senderGmailPassword, receiverEmail, senderNumber, messageBody)
+                        .subscribe({
+                            context.showToast("Message from $senderNumber was sent to $receiverEmail")
+                        }, { e ->
+                            context.showToast(e.message)
+                        })
+                } else {
+                    workManager.scheduleSendingEmail(senderNumber, messageBody)
+                }
+            },{})
 
     }
 
